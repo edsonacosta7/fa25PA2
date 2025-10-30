@@ -31,16 +31,8 @@ int main() {
     // Step 2: Create leaf nodes for each character with nonzero frequency
     int nextFree = createLeafNodes(freq);
 
-    // Step 3: Build encoding tree using your heap
-    int root = buildEncodingTree(nextFree);
-
-    // Step 4: Generate binary codes using an STL stack
-    string codes[26];
-    generateCodes(root, codes);
-
-    // Step 5: Encode the message and print output
-    encodeMessage("input.txt", codes);
-
+    cout << "Basic structure and frequency analysis complete.\n";
+    cout << "Ready to implement heap operations next.\n";
     return 0;
 }
 
@@ -89,44 +81,19 @@ int createLeafNodes(int freq[]) {
 
 // Step 3: Build the encoding tree using heap operations
 int buildEncodingTree(int nextFree) {
-    // TODO:
-    // 1. Create a MinHeap object.
-    // 2. Push all leaf node indices into the heap.
-    // 3. While the heap size is greater than 1:
-    //    - Pop two smallest nodes
-    //    - Create a new parent node with combined weight
-    //    - Set left/right pointers
-    //    - Push new parent index back into the heap
-    // 4. Return the index of the last remaining node (root)
+    // TODO: Implement in next commit
+    cout << "Heap tree building - to be implemented\n";
     return -1; // placeholder
 }
 
 // Step 4: Use an STL stack to generate codes
 void generateCodes(int root, string codes[]) {
-    // TODO:
-    // Use stack<pair<int, string>> to simulate DFS traversal.
-    // Left edge adds '0', right edge adds '1'.
-    // Record code when a leaf node is reached.
+    // TODO: Implement in future commit
+    cout << "Code generation - to be implemented\n";
 }
 
 // Step 5: Print table and encoded message
 void encodeMessage(const string& filename, string codes[]) {
-    cout << "\nCharacter : Code\n";
-    for (int i = 0; i < 26; ++i) {
-        if (!codes[i].empty())
-            cout << char('a' + i) << " : " << codes[i] << "\n";
-    }
-
-    cout << "\nEncoded message:\n";
-
-    ifstream file(filename);
-    char ch;
-    while (file.get(ch)) {
-        if (ch >= 'A' && ch <= 'Z')
-            ch = ch - 'A' + 'a';
-        if (ch >= 'a' && ch <= 'z')
-            cout << codes[ch - 'a'];
-    }
-    cout << "\n";
-    file.close();
+    // TODO: Implement in future commit
+    cout << "Message encoding - to be implemented\n";
 }
