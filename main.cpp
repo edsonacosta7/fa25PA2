@@ -31,8 +31,10 @@ int main() {
     // Step 2: Create leaf nodes for each character with nonzero frequency
     int nextFree = createLeafNodes(freq);
 
-    cout << "Basic structure and frequency analysis complete.\n";
-    cout << "Ready to implement heap operations next.\n";
+    // Step 3: Build encoding tree using your heap
+    int root = buildEncodingTree(nextFree);
+
+    cout << "Heap implementation complete. Root node: " << root << endl;
     return 0;
 }
 
@@ -81,9 +83,38 @@ int createLeafNodes(int freq[]) {
 
 // Step 3: Build the encoding tree using heap operations
 int buildEncodingTree(int nextFree) {
-    // TODO: Implement in next commit
-    cout << "Heap tree building - to be implemented\n";
-    return -1; // placeholder
+    cout << "Building encoding tree with min heap...\n";
+
+    // Create a MinHeap object
+    MinHeap heap;
+
+    // Push all leaf node indices into the heap
+    for (int i = 0; i < nextFree; i++) {
+        heap.push(i, weightArr);
+    }
+
+    int currentNode = nextFree; // Start new nodes after leaf nodes
+
+    // While the heap size is greater than 1, combine nodes
+    while (heap.size > 1) {
+        // Pop two smallest nodes
+        int leftIdx = heap.pop(weightArr);
+        int rightIdx = heap.pop(weightArr);
+
+        // Create a new parent node with combined weight
+        weightArr[currentNode] = weightArr[leftIdx] + weightArr[rightIdx];
+        leftArr[currentNode] = leftIdx;
+        rightArr[currentNode] = rightIdx;
+        charArr[currentNode] = '\0'; // Internal nodes don't have characters
+
+        // Push new parent index back into the heap
+        heap.push(currentNode, weightArr);
+
+        currentNode++;
+    }
+
+    // Return the index of the last remaining node (root)
+    return heap.pop(weightArr);
 }
 
 // Step 4: Use an STL stack to generate codes
