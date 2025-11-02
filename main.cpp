@@ -5,6 +5,7 @@
 #include <fstream>
 #include <stack>
 #include <string>
+#include <utility> // for std::pair
 #include "heap.h"
 using namespace std;
 
@@ -34,7 +35,11 @@ int main() {
     // Step 3: Build encoding tree using your heap
     int root = buildEncodingTree(nextFree);
 
-    cout << "Heap implementation complete. Root node: " << root << endl;
+    // Step 4: Generate binary codes using an STL stack
+    string codes[26];
+    generateCodes(root, codes);
+
+    cout << "Code generation complete.\n";
     return 0;
 }
 
@@ -119,8 +124,39 @@ int buildEncodingTree(int nextFree) {
 
 // Step 4: Use an STL stack to generate codes
 void generateCodes(int root, string codes[]) {
-    // TODO: Implement in future commit
-    cout << "Code generation - to be implemented\n";
+    // Use stack to store node index and current code
+    stack<pair<int, string>> nodeStack;
+
+    // Start with root and empty code
+    nodeStack.push(make_pair(root, ""));
+
+    while (!nodeStack.empty()) {
+        pair<int, string> current = nodeStack.top();
+        nodeStack.pop();
+
+        int nodeIdx = current.first;
+        string currentCode = current.second;
+
+        // If this is a leaf node (has a character)
+        if (charArr[nodeIdx] != '\0') {
+            // Store the code for this character
+            int charIndex = charArr[nodeIdx] - 'a';
+            codes[charIndex] = currentCode;
+            cout << "Assigned code '" << currentCode << "' to character '" << charArr[nodeIdx] << "'\n";
+        }
+
+        // If left child exists, push it with currentCode + "0"
+        if (leftArr[nodeIdx] != -1) {
+            nodeStack.push(make_pair(leftArr[nodeIdx], currentCode + "0"));
+        }
+
+        // If right child exists, push it with currentCode + "1"
+        if (rightArr[nodeIdx] != -1) {
+            nodeStack.push(make_pair(rightArr[nodeIdx], currentCode + "1"));
+        }
+    }
+
+    cout << "Code generation complete.\n";
 }
 
 // Step 5: Print table and encoded message
