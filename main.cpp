@@ -39,7 +39,9 @@ int main() {
     string codes[26];
     generateCodes(root, codes);
 
-    cout << "Code generation complete.\n";
+    // Step 5: Encode the message and print output
+    encodeMessage("input.txt", codes);
+
     return 0;
 }
 
@@ -142,7 +144,6 @@ void generateCodes(int root, string codes[]) {
             // Store the code for this character
             int charIndex = charArr[nodeIdx] - 'a';
             codes[charIndex] = currentCode;
-            cout << "Assigned code '" << currentCode << "' to character '" << charArr[nodeIdx] << "'\n";
         }
 
         // If left child exists, push it with currentCode + "0"
@@ -155,12 +156,38 @@ void generateCodes(int root, string codes[]) {
             nodeStack.push(make_pair(rightArr[nodeIdx], currentCode + "1"));
         }
     }
-
-    cout << "Code generation complete.\n";
 }
 
 // Step 5: Print table and encoded message
 void encodeMessage(const string& filename, string codes[]) {
-    // TODO: Implement in future commit
-    cout << "Message encoding - to be implemented\n";
+    // Print the code table
+    cout << "\nCharacter : Code\n";
+    for (int i = 0; i < 26; ++i) {
+        if (!codes[i].empty()) {
+            cout << char('a' + i) << " : " << codes[i] << "\n";
+        }
+    }
+
+    // Encode and print the message
+    cout << "\nEncoded message:\n";
+
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Error: could not open " << filename << " for encoding\n";
+        return;
+    }
+
+    char ch;
+    while (file.get(ch)) {
+        // Convert uppercase to lowercase
+        if (ch >= 'A' && ch <= 'Z')
+            ch = ch - 'A' + 'a';
+
+        // Only encode lowercase letters
+        if (ch >= 'a' && ch <= 'z') {
+            cout << codes[ch - 'a'];
+        }
+    }
+    cout << "\n";
+    file.close();
 }
