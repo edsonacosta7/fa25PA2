@@ -46,7 +46,7 @@ int main() {
 }
 
 /*------------------------------------------------------
-    Function Definitions (Students will complete logic)
+    Function Definitions - Complete Implementation
   ------------------------------------------------------*/
 
 // Step 1: Read file and count frequencies
@@ -68,8 +68,6 @@ void buildFrequencyTable(int freq[], const string& filename) {
             freq[ch - 'a']++;
     }
     file.close();
-
-    cout << "Frequency table built successfully.\n";
 }
 
 // Step 2: Create leaf nodes for each character
@@ -84,14 +82,11 @@ int createLeafNodes(int freq[]) {
             nextFree++;
         }
     }
-    cout << "Created " << nextFree << " leaf nodes.\n";
     return nextFree;
 }
 
 // Step 3: Build the encoding tree using heap operations
 int buildEncodingTree(int nextFree) {
-    cout << "Building encoding tree with min heap...\n";
-
     // Create a MinHeap object
     MinHeap heap;
 
